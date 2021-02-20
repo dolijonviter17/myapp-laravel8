@@ -15,6 +15,8 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
+        Question::class => QuestionPolicy::class,
+        Answer::class => AnswerPolicy::class,
         // Team::class => TeamPolicy::class,
         'App\Models\Model' => 'App\Policies\ModelPolicy',
     ];
@@ -26,10 +28,18 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+
         $this->registerPolicies();
-        if (!app()->runningInConsole()) {
-            Passport::routes();
-        };
+
+        // \Gate::define('update-question', function($user, $question){
+        //     return $user->id == $question->user_id;
+        // });
+        // \Gate::define('delete-question', function($user, $question){
+        //     return $user->id == $question->user_id;
+        // });
+        // if (!app()->runningInConsole()) {
+        //     Passport::routes();
+        // };
         //
     }
 }

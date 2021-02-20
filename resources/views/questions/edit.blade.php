@@ -1,22 +1,37 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Question') }}
+@extends('layouts.uitemplate')
 
-            <a href="{{route('questions.index')}}">Back Question</a>
-        </h2>
-    </x-slot>
+@section('title', 'Update Question')
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class=" overflow-hidden shadow-xl sm:rounded-lg">
-
-                <form action="{{ route('questions.update', $question->id) }}" method="post">
-                    {{ method_field('PUT') }}
-                    @include ("questions._form", ['buttonText' => "Update Question"])
-               </form>
-               
+@section('content')
+    
+<div class="container-fluid">
+    <div class="fade-in">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="card">
+            <div class="card-header"><h4>Update Question</h4></div>
+              <div class="card-body">
+                  @if(Session::has('message'))
+                      <div class="row">
+                          <div class="col-12">
+                              <div class="alert alert-success" role="alert">{{ Session::get('message') }}</div>
+                          </div>
+                      </div>
+                  @endif            
+                  <div class="row">
+                      <div class="col-6">
+                          <form method="POST" action="{{route('questions.update', $question->id)}}">
+                            @method('PUT')
+                            @include ("questions._form", ['buttonText' => "Update Question"])
+                          </form>
+                      </div>
+                  </div>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
-</x-app-layout>
+  </div>
+@endsection
 

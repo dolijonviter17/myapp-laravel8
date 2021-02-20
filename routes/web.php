@@ -5,8 +5,15 @@ use App\Models\Team;
 use App\Models\User;
 use App\Http\Livewire\Questions;
 use App\Http\Controllers\QuestionsController;
+use App\Http\Controllers\AnswersController;
+use App\Http\Controllers\RestApi\InfoCoronaController;
 use App\Http\Controllers\ServicesController;
+use App\Http\Controllers\AcceptAnswerController;
 use App\Http\Controllers\AppointmentsController;
+use App\Http\Controllers\FavoritesController;
+use App\Http\Controllers\VoteQuestionController;
+use App\Http\Controllers\VoteAnswerController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Datatables\EmployeesController;
 /*
 |--------------------------------------------------------------------------
@@ -24,31 +31,17 @@ Route::get('/', function () {
     // dd(App\Models\Question::all());
 });
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');
-// Route::livewire('questions', 'questions');
-Route::resource('questions', QuestionsController::class);
-Route::resource('appointments', AppointmentsController::class);
-// Route::delete('appointments/destroy', 'AppointmentsController@massDestroy')->name('appointments.massDestroy');
-Route::resource('services', ServicesController::class);
-// Route::get('/quest', Questions::class);
+Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'myQuestion'])->name('dashboard');;
+    Route::resource('/questions', QuestionsController::class)->except('show');
+    Route::get('/questions/{slug}', [QuestionsController::class, 'show'])->name('questions.show');
+    Route::post('/answers/{answer}/accept', AcceptAnswerController::class)->name('answers.accept');
+    Route::resource('questions.answers', AnswersController::class)->except(['index', 'create', 'show']);
 
-Route::get('/template', function () {
-    return view('layouts.template');
+    Route::post('/questions/{question}/favorites', [FavoritesController::class, 'store'])->name('questions.favorite');
+    Route::delete('/questions/{question}/favorites', [FavoritesController::class, 'destroy'])->name('questions.unfavorite');
+    Route::post('/questions/{question}/vote', VoteQuestionController::class);
+    Route::post('/answers/{answer}/vote', VoteAnswerController::class);
 });
 
-Route::get('/mytemplate', function () {
-    return view('layouts.mytemplate');
-});
-// Route::get('/teams', function () {
-//     DB::table('teams')->insertGetId(
-//         ['user_id' => 1, 'name' => 'Mr. Wilfredo', 'personal_team' => false]
-//     );
-//     return 'success';
-//     // dd(User::all());
-// });
-
-Route::get('/dsa', [DsaController::class, 'findQuestion']);
-Route::get('/employee', [EmployeesController::class, 'index'])->name('employee');
-Route::get('/details', [EmployeesController::class, 'getRowDetails'])->name('details');   
+// Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', [DashboardController::class, 'myQuestion'])->name('dashboard');

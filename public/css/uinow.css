@@ -1,0 +1,45 @@
+.black-arrow {
+    color: black;
+}
+
+.up-vote-comment {
+    width: 100%;
+}
+
+.down-vote-comment {
+    position: relative;
+    top: -15px;
+}
+
+.comment-vote {
+    font-size: 20px;
+}
+
+
+.now-ui-icons {
+    display: inline-block;
+    font: normal normal normal 32px/1 'Nucleo Outline';
+    font-size: 32px;
+    speak-as: none;
+    text-transform: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* .all-icons [class*="now-ui-icons"] {
+    font-size: 32px;
+}
+
+.all-icons .font-icon-detail p {
+    margin: 25px auto 0;
+    width: 100%;
+    text-align: center;
+    display: block;
+    color: #B8B8B8;
+    padding: 0 10px;
+    font-size: 0.7142em;
+} */
+
+/* .all-icons [class*=now-ui-icons] {
+    font-size: 2px;
+} */

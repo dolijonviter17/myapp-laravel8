@@ -23,6 +23,9 @@
                         {{ __('Appointments') }}
                     </x-jet-nav-link>
              
+                    <x-jet-nav-link href="{{ route('corona.index') }} ">
+                        {{ __('Info Corona') }}
+                    </x-jet-nav-link>
                 </div>
             </div>
 
